@@ -12,5 +12,18 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    //return $router->app->version();
+    return phpinfo();
 });
+
+$router->get('/test-soap', function() use ($router) {
+    $wsdl = 'http://ewallet.test:40/index.php/wallet/service?wsdl';
+
+    $cliente = new \SoapClient($wsdl);
+    $response = $cliente->hello();
+
+    dd($response);
+});
+
+$router->post('client/register', 'WalletController@registrarCliente');
+$router->post('client/recharge', 'WalletController@recargarSaldo');
