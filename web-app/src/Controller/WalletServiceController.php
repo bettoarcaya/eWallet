@@ -14,7 +14,9 @@ class WalletServiceController extends AbstractController
      */
     public function index(WalletService $walletService)
     {
-        $soapServer = new \SoapServer('/src/Soap/hellowsdl.wsdl');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $soapServer = new \SoapServer('/var/www/eWallet/web-app/src/Soap/hellowsdl.wsdl');
         $soapServer->setObject($walletService);
 
         $response = new Response();

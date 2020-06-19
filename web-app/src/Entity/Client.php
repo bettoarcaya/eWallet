@@ -37,6 +37,12 @@ class Client
      */
     private $celular;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="clients")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Client
     public function setCelular(string $celular): self
     {
         $this->celular = $celular;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

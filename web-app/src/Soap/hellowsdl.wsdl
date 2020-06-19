@@ -51,7 +51,7 @@
 
     <service name="hellowsdl">
         <port name="hellowsdlPort" binding="tns:hellowsdlBinding">
-            <soap:address location="http://ewallet.test:40/index.php/wallet/service"/>
+            <soap:address location="http://ewallet.test:40/index.php/wallet/service?wsdl"/>
         </port>
     </service>
 </definitions>

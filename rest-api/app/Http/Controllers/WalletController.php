@@ -12,7 +12,7 @@ class WalletController extends Controller
 
     public function __construct()
     {
-        $this->wsdl = 'http://ewallet.test:40/index.php/wallet/service?wsdl';
+        $this->wsdl = env('SOAP_SERVER_URL').'index.php/wallet/service?wsdl';
     }
 
     public function registrarCliente( Request $request )

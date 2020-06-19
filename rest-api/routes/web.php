@@ -11,18 +11,27 @@
 |
 */
 
+use Illuminate\Support\Facades\Log;
+
 $router->get('/', function () use ($router) {
     //return $router->app->version();
     return phpinfo();
 });
 
 $router->get('/test-soap', function() use ($router) {
-    $wsdl = 'http://ewallet.test:40/index.php/wallet/service?wsdl';
 
-    $cliente = new \SoapClient($wsdl);
-    $response = $cliente->hello();
+    $wsdl = env('SOAP_SERVER_URL').'index.php/wallet/service?wsdl';
 
-    dd($response);
+    try {
+        $cliente = new SoapClient($wsdl);
+        $response = $cliente->call('hello');
+
+        dd($response);
+    }catch ( \Exception $e) {
+        //Log::info('Caught Exception in client'. $e->getMessage());
+        dd($e->getMessage());
+    }
+
 });
 
 $router->post('client/register', 'WalletController@registrarCliente');
