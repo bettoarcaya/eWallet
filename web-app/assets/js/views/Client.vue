@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 bg-white padd-20">
                 <table class="table">
                     <thead>
                     <tr>
@@ -52,6 +52,9 @@
     export default {
         name: "Client",
         components: {ClientForm},
+        mounted() {
+            this.getRecords()
+        },
         data() {
             return {
                 showForm: false,
@@ -61,7 +64,16 @@
         methods: {
             close(){
                 this.showForm = false;
-            }
+            },
+            getRecords(){
+                this.$http.get('http://rest-api.test:40/client/')
+                    .then(response => {
+                        this.clients = (response.success) ? response.data.data : {}
+                    })
+                    .catch(error => {
+                        console.log(error.response)
+                    })
+            },
         }
     }
 </script>

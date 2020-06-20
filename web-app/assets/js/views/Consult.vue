@@ -4,8 +4,9 @@
             <h1>Consultar cuenta</h1>
         </div>
         <div class="row">
-            <div class="col-md-4 text-center">
-                <h3> Su saldo disponible es: {{amount}}</h3>
+            <div class="col-md-12 text-center bg-white padd-20">
+                <h3> Su saldo disponible es </h3>
+                <h3> {{amount}} </h3>
             </div>
         </div>
     </div>

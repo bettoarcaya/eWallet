@@ -148,4 +148,20 @@ class WalletController extends Controller
         ]);
     }
 
+    public function listarPagos()
+    {
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->listarPagos();
+        }catch(\Exception $e) {
+            $response = null;
+        }
+
+        return response()->json([
+            'success' => ($response != null),
+            'message' => '',
+            'data' => $response
+        ]);
+    }
+
 }

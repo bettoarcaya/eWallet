@@ -14,8 +14,10 @@ class HomeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $name = $this->getUser()->getFullname();
+
         return $this->render('home/index.html.twig', [
-            'controller_name' => $this->getUser()->getFullname(),
+            'name' => $name,
         ]);
     }
 }

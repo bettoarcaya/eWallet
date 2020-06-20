@@ -5,7 +5,7 @@
         </div>
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-4 bg-white padd-20">
                 <form @submit="submit">
                     <div class="form-group">
                         <label for="client">Cliente</label>
@@ -70,7 +70,6 @@
                     })
             },
             submit(){
-                //this.showConfirmForm = true
                 this.$http.post('http://rest-api.test:40/client/pay', this.form)
                     .then(response => {
                       if( response.success ){

@@ -112,7 +112,11 @@ class WalletService
             'user_id' => $this->getUser()->getId(),
             'token' => $values['token']
         ]);
-        $wallet = $this->entityManager->getRepository(Wallet::class)->findOneBy(['user_id', $this->getUser()->getId()]);
+
+        $wallet_repository = $this->entityManager->getRepository(Wallet::class);
+        $wallet = $wallet_repository->findOneBy([
+            'user_id', $this->getUser()->getId()
+        ]);
 
         if( $payment == null || $wallet->getBalance() < $payment->getValue()){
             return null;
@@ -131,7 +135,8 @@ class WalletService
 
     public function consultarSaldo($values)
     {
-        $client = $this->entityManager->getRepository(User::class)->find($this->getUser()->getId());
+        $user_repository = $this->entityManager->getRepository(User::class);
+        $client = $user_repository->find($this->getUser()->getId());
 
         if( $client->getDocumento() != $values['documento'] || $client->getCelular() != $values['celular'] ){
             return null;
@@ -145,8 +150,21 @@ class WalletService
 
     public function listarClientes()
     {
-        $clients = $this->entityManager->getRepository()->findBy(['user_id' => $this->getUser()->getId()]);
+        $repository = $this->entityManager->getRepository(Client::class);
+        $clients = $repository->findBy([
+            'user_id' => $this->getUser()->getId()
+        ]);
 
         return $this->serializer->serialize($clients, 'json');
+    }
+
+    public function listarPagos()
+    {
+        $repository = $this->entityManager->getRepository(Payment::class);
+        $payments = $repository->findBy([
+            'user_id' => $this->getUser()->getId()
+        ]);
+
+        return $this->serializer->serialize($payments, 'json');
     }
 }

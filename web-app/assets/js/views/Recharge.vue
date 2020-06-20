@@ -5,7 +5,7 @@
         </div>
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-4 bg-white padd-20">
                 <form @submit="submit">
                     <div class="form-group">
                         <label for="value">Monto</label>

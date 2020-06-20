@@ -22,4 +22,6 @@ $router->post('client/recharge', 'WalletController@recargarSaldo');
 $router->post('client/pay', 'WalletController@pagar');
 $router->post('client/confirm-payment', 'WalletController@confirmarPago');
 $router->post('client/get-balance', 'WalletController@consultarSaldo');
+
 $router->get('client/', 'WalletController@listarClientes');
+$router->get('client/get-payments', 'WalletController@listarPagos');
