@@ -26,8 +26,12 @@ class WalletController extends Controller
 
         $data = $request->all();
 
-        $service = new \SoapClient($this->wsdl);
-        $response = $service->registroClientes($data);
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->registroClientes($data);
+        }catch (\Exception $e){
+            $response = null;
+        }
 
         return response()->json([
             'success' => ($response == 'OK'),
@@ -46,9 +50,12 @@ class WalletController extends Controller
 
         $data = $request->all();
 
-        $service = new \SoapClient($this->wsdl);
-        $response = $service->recargarSaldo($data);
-
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->recargarSaldo($data);
+        }catch(\Exception $e) {
+            $response = null;
+        }
 
         return response()->json([
             'success' => ($response == 'OK'),
@@ -66,8 +73,12 @@ class WalletController extends Controller
 
         $data = $request->all();
 
-        $service = new \SoapClient($this->wsdl);
-        $response = $service->pagar($data);
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->pagar($data);
+        }catch(\Exception $e) {
+            $response = null;
+        }
 
         return response()->json([
             'success' => ($response == 'OK'),
@@ -84,11 +95,16 @@ class WalletController extends Controller
 
         $data = $request->all();
 
-        $service = new \SoapClient($this->wsdl);
-        $response = $service->confirmar($data);
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->confirmar($data);
+        }catch(\Exception $e) {
+            $response = null;
+        }
 
         return response()->json([
-            'success' => true,
+            'success' => ($response != null),
+            'message' => ($response == 'OK') ? 'Pago confirmado satisfactoriamente' : 'Algo salio mal',
             'data' => $response
         ]);
     }
@@ -102,9 +118,13 @@ class WalletController extends Controller
 
         $data = $request->all();
 
-        $service = new \SoapClient($this->wsdl);
-        $response = $service->consultarSaldo($data);
-
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->consultarSaldo($data);
+        }catch(\Exception $e) {
+            $response = null;
+        }
+        
         return response()->json([
             'success' => ($response != null),
             'message' => '',

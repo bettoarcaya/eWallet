@@ -38,7 +38,7 @@ class WalletService
         $client->setNombre($values['nombres']);
         $client->setEmail($values['email']);
         $client->setCelular($values['celular']);
-        $client->setUserId($this->getUser()->id);
+        $client->setUserId($this->getUser()->getId());
 
         $this->entityManager->persist($client);
         $this->entityManager->flush();
@@ -48,14 +48,14 @@ class WalletService
 
     public function recargarSaldo($values)
     {
-        $client = $this->entityManager->getRepository(User::class)->find($this->getUser()->id);
+        $client = $this->entityManager->getRepository(User::class)->find($this->getUser()->getId());
 
         if( $client->getDocumento() != $values['documento'] || $client->getCelular() != $values['celular'] ){
             return null;
         }
 
         $repository = $this->entityManager->getRepository(Wallet::class);
-        $wallet = $repository->findOneBy(['user_id' => $this->getUser()->id]);
+        $wallet = $repository->findOneBy(['user_id' => $this->getUser()->getId()]);
         $wallet->setBalance($values['valor']);
 
         $this->entityManager->persist($wallet);
@@ -68,7 +68,7 @@ class WalletService
     {
         $repository = $this->entityManager->getRepository(Client::class);
         $client = $repository->findOneBy([
-            'user_id' => $this->getUser()->id,
+            'user_id' => $this->getUser()->getId(),
             'documento' => $values['documento']
         ]);
 
@@ -79,17 +79,17 @@ class WalletService
         $token = random_bytes ( 6 );
 
         $payment = new Payment();
-        $payment->setUserId($this->getUser()->id);
+        $payment->setUserId($this->getUser()->getId());
         $payment->setClientId($client->getId());
         $payment->setValue($values['monto']);
-        $payment->getStatus('pending');
+        $payment->setStatus("pending");
         $payment->setToken($token);
 
         $this->entityManager->persist($payment);
         $this->entityManager->flush();
 
         $message = new \Swift_Message('eWallet Service');
-        $message->setTo($this->getUser()->email)->setBody('Token: ' . $token);
+        $message->setTo($this->getUser()->getEmail())->setBody('Token: ' . $token);
 
         $this->mailer->send($message);
 
@@ -100,10 +100,10 @@ class WalletService
     {
         $repository = $this->entityManager->getRepository(Payment::class);
         $payment = $repository->findOneBy([
-            'user_id' => $this->getUser()->id,
+            'user_id' => $this->getUser()->getId(),
             'token' => $values['token']
         ]);
-        $wallet = $this->entityManager->getRepository(Wallet::class)->findOneBy(['user_id', $this->getUser()->id]);
+        $wallet = $this->entityManager->getRepository(Wallet::class)->findOneBy(['user_id', $this->getUser()->getId()]);
 
         if( $payment == null || $wallet->getBalance() < $payment->getValue()){
             return null;
@@ -122,14 +122,14 @@ class WalletService
 
     public function consultarSaldo($values)
     {
-        $client = $this->entityManager->getRepository(User::class)->find($this->getUser()->id);
+        $client = $this->entityManager->getRepository(User::class)->find($this->getUser()->getId());
 
         if( $client->getDocumento() != $values['documento'] || $client->getCelular() != $values['celular'] ){
             return null;
         }
 
         $repository = $this->entityManager->getRepository(Wallet::class);
-        $wallet = $repository->findOneBy(['user_id' => $this->getUser()->id]);
+        $wallet = $repository->findOneBy(['user_id' => $this->getUser()->getId()]);
 
         return $wallet->getBalance();
     }
