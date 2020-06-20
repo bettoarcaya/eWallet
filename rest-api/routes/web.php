@@ -14,8 +14,7 @@
 use Illuminate\Support\Facades\Log;
 
 $router->get('/', function () use ($router) {
-    //return $router->app->version();
-    return phpinfo();
+    return $router->app->version();
 });
 
 $router->get('/test-soap', function() use ($router) {

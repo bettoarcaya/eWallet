@@ -27,10 +27,6 @@ class WalletServiceController extends AbstractController
         $response->setContent(ob_get_clean());
 
         return $response;
-
-        /*return $this->render('wallet_service/index.html.twig', [
-            'controller_name' => 'WalletServiceController',
-        ]);*/
     }
 
 }

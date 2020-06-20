@@ -6,8 +6,9 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "ext-soap": "*",
         "laravel/lumen-framework": "^7.0",
-      "ext-soap": "*"
+        "nordsoftware/lumen-cors": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

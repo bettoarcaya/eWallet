@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class Client
      * @ORM\JoinColumn(nullable=false)
      */
     private $user_id;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="client_id", orphanRemoval=true)
+     */
+    private $payments;
+
+    public function __construct()
+    {
+        $this->payments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +116,37 @@ class Client
     public function setUserId(?User $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->contains($payment)) {
+            $this->payments->removeElement($payment);
+            // set the owning side to null (unless already changed)
+            if ($payment->getClientId() === $this) {
+                $payment->setClientId(null);
+            }
+        }
 
         return $this;
     }

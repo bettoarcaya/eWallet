@@ -14,9 +14,13 @@ import '../css/app.css';
 //console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 import Vue from 'vue';
+import Axios from 'axios';
 import App from './views/App.vue';
+import Client from './views/Client.vue';
+import ClientForm from './components/ClientForm.vue';
 
+Vue.prototype.$http = Axios;
 new Vue({
     el: '#app',
-    components: {App}
+    components: {App, Client, ClientForm}
 })

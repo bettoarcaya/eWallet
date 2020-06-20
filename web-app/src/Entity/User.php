@@ -61,9 +61,15 @@ class User implements UserInterface
      */
     private $celular;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="user_id", orphanRemoval=true)
+     */
+    private $payments;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     public function getFullname(): ?string
@@ -217,6 +223,37 @@ class User implements UserInterface
     public function setCelular(?string $celular): self
     {
         $this->celular = $celular;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->contains($payment)) {
+            $this->payments->removeElement($payment);
+            // set the owning side to null (unless already changed)
+            if ($payment->getUserId() === $this) {
+                $payment->setUserId(null);
+            }
+        }
 
         return $this;
     }

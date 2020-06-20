@@ -3,12 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <body>
         {% if app.user %}
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 20px;">
                 <a class="navbar-brand" href="#">eWallet</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,7 +22,7 @@
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cliente</a>
+                            <a class="nav-link" href="{{ url('client') }}">Cliente</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Pagar</a>
@@ -42,7 +44,10 @@
                 </div>
             </nav>
         {% endif %}
-        {% block body %}{% endblock %}
+        <div id="app">
+            {% block body %}{% endblock %}
+        </div>
+
         {% block javascripts %}{% endblock %}
         {{ encore_entry_script_tags('app') }}
 
