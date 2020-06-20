@@ -11,19 +11,28 @@ use App\Entity\Wallet;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class WalletService
 {
     private $entityManager;
     private $mailer;
+    private $encoders;
+    private $normalizers;
+    private $serializer;
 
     public function __construct(
         EntityManagerInterface $entity_manager,
         \Swift_Mailer $mailer
-    )
-    {
+    ){
         $this->entityManager = $entity_manager;
         $this->mailer = $mailer;
+        $this->encoders = array(new XmlEncoder(), new JsonEncoder());
+        $this->normalizers = array(new ObjectNormalizer());
+        $this->serializer = new Serializer($this->normalizers, $this->encoders);
     }
 
     public function hello()
@@ -131,6 +140,13 @@ class WalletService
         $repository = $this->entityManager->getRepository(Wallet::class);
         $wallet = $repository->findOneBy(['user_id' => $this->getUser()->getId()]);
 
-        return $wallet->getBalance();
+        return $this->serializer->serialize($wallet, 'json');
+    }
+
+    public function listarClientes()
+    {
+        $clients = $this->entityManager->getRepository()->findBy(['user_id' => $this->getUser()->getId()]);
+
+        return $this->serializer->serialize($clients, 'json');
     }
 }

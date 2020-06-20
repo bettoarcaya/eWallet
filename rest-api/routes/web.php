@@ -17,24 +17,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-/*$router->get('/test-soap', function() use ($router) {
-
-    $wsdl = env('SOAP_SERVER_URL').'index.php/wallet/service?wsdl';
-
-    try {
-        $cliente = new SoapClient($wsdl);
-        $response = $cliente->call('hello');
-
-        dd($response);
-    }catch ( \Exception $e) {
-        //Log::info('Caught Exception in client'. $e->getMessage());
-        dd($e->getMessage());
-    }
-
-});*/
-
 $router->post('client/register', 'WalletController@registrarCliente');
 $router->post('client/recharge', 'WalletController@recargarSaldo');
 $router->post('client/pay', 'WalletController@pagar');
 $router->post('client/confirm-payment', 'WalletController@confirmarPago');
 $router->post('client/get-balance', 'WalletController@consultarSaldo');
+$router->get('client/', 'WalletController@listarClientes');

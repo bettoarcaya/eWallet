@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RechargeController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <Recharge
+            :documento="{{ document }}"
+            :celular="{{ phone }}"
+        ></Recharge>
+    </div>
+{% endblock %}

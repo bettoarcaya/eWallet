@@ -17,10 +17,20 @@ import Vue from 'vue';
 import Axios from 'axios';
 import App from './views/App.vue';
 import Client from './views/Client.vue';
+import Recharge from './views/Recharge.vue';
+import Payment from './views/Payment.vue';
+import Consult from './views/Consult.vue';
 import ClientForm from './components/ClientForm.vue';
 
 Vue.prototype.$http = Axios;
 new Vue({
     el: '#app',
-    components: {App, Client, ClientForm}
+    components: {
+        App,
+        Client,
+        ClientForm,
+        Recharge,
+        Payment,
+        Consult
+    }
 })

@@ -106,11 +106,11 @@ $app->configure('app');
 |
 */
 
-/*$app->register('Nord\Lumen\Cors\CorsServiceProvider');
+$app->register('Nord\Lumen\Cors\CorsServiceProvider');
 
 $app->middleware([
 	'Nord\Lumen\Cors\CorsMiddleware',
-]);*/
+]);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',

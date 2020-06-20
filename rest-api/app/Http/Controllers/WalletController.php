@@ -12,7 +12,7 @@ class WalletController extends Controller
 
     public function __construct()
     {
-        $this->wsdl = env('SOAP_SERVER_URL').'index.php/wallet/service?wsdl';
+        $this->wsdl = env('SOAP_SERVER_URL');
     }
 
     public function registrarCliente( Request $request )
@@ -124,7 +124,23 @@ class WalletController extends Controller
         }catch(\Exception $e) {
             $response = null;
         }
-        
+
+        return response()->json([
+            'success' => ($response != null),
+            'message' => '',
+            'data' => $response
+        ]);
+    }
+
+    public function listarClientes()
+    {
+        try {
+            $service = new \SoapClient($this->wsdl);
+            $response = $service->listarClientes();
+        }catch(\Exception $e) {
+            $response = null;
+        }
+
         return response()->json([
             'success' => ($response != null),
             'message' => '',

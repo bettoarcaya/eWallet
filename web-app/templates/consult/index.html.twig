@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConsultController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <Consult
+            :documento="{{ document }}"
+            :celular="{{ phone }}"
+        ></Consult>
+    </div>
+{% endblock %}
