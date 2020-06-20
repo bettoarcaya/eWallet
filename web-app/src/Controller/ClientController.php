@@ -12,6 +12,7 @@ class ClientController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('client/index.html.twig', [
             'controller_name' => 'ClientController',
         ]);

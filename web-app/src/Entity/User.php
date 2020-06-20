@@ -77,6 +77,13 @@ class User implements UserInterface
         return $this->fullname;
     }
 
+    public function setFullname(string $fullname): self
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

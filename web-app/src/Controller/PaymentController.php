@@ -12,6 +12,7 @@ class PaymentController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController'
         ]);

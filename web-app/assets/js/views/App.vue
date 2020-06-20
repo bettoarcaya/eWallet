@@ -39,7 +39,13 @@
         },
         methods: {
             getRecords(){
-
+                this.$http.get('http://rest-api.test:40/client/get-payments')
+                    .then(response => {
+                        this.payments = (response.success) ? response.data.data : {}
+                    })
+                    .catch(error => {
+                        console.log(error.response)
+                    })
             }
         }
     }

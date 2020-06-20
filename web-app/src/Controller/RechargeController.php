@@ -12,6 +12,7 @@ class RechargeController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $document = $this->getUser()->getDocumento();
         $phone = $this->getUser()->getCelular();
         return $this->render('recharge/index.html.twig', [

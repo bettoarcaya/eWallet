@@ -12,6 +12,7 @@ class ConsultController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $document = $this->getUser()->getDocumento();
         $phone = $this->getUser()->getCelular();
 
